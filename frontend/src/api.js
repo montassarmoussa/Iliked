@@ -3,7 +3,7 @@ import axios from 'axios'
 // Instance axios configurée pour appeler l'API Laravel
 // Le proxy Vite redirige /api vers http://localhost:8000
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_URL || '/api',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
