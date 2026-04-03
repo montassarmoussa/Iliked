@@ -1,0 +1,23 @@
+services:
+  db:
+    image: mysql:8.4
+    container_name: iliked-db
+    restart: unless-stopped
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: azerty06130SHanene963.
+      MYSQL_DATABASE: iliked
+      MYSQL_USER: iliked
+      MYSQL_PASSWORD: azerty06130SHanene963.
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  db-data:
