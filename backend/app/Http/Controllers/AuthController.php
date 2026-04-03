@@ -181,8 +181,10 @@ class AuthController extends Controller
         $user = $request->user();
 
         if ($request->hasFile('picture')) {
-            $path = $request->file('picture')->store('avatars', 'public');
-            $validated['picture'] = '/storage/' . $path;
+            $file = $request->file('picture');
+            $imageData = base64_encode(file_get_contents($file->getRealPath()));
+            $mime = $file->getMimeType();
+            $validated['picture'] = 'data:' . $mime . ';base64,' . $imageData;
         }
 
         $user->update($validated);
