@@ -1,20 +1,17 @@
-FROM php:8.3-cli
+FROM php:8.2-fpm
 
 WORKDIR /app
 
-# Installer les extensions PHP nécessaires
 RUN apt-get update && apt-get install -y \
     libpng-dev libonig-dev libxml2-dev zip unzip git curl \
-    && docker-php-ext-install pdo_mysql mbstring bcmath tokenizer xml ctype fileinfo curl
+    && docker-php-ext-install pdo_mysql mbstring bcmath xml ctype fileinfo curl
 
-# Installer Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY ./backend /app
 
-COPY . /app
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && composer install --no-dev --optimize-autoloader \
+    && php artisan config:cache
 
-RUN composer install --no-dev --optimize-autoloader
-RUN php artisan config:cache
+EXPOSE 9000
 
-EXPOSE 8080
-
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "public"]
+CMD ["php-fpm"]
