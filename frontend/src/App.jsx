@@ -25,9 +25,9 @@ function App() {
 
       {/* Définition des routes */}
       <Routes>
-        <Route path="/" element={<Auth />} />
+        <Route path="/" element={<Home />} />
         <Route path="/setup" element={<Setup />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/auth" element={<Auth />} />
         <Route path="/profile/edit" element={<Profile />} />
         <Route path="/user/:username" element={<PublicProfile />} />
         <Route path="/random" element={<RandomMovie />} />
